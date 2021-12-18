@@ -128,58 +128,41 @@ void renameFiles(char *credentialsFilePath) {
     /* rename return value */
     int ret;
 
-    /* TODO: Remove duplicating names */
-    char* backup_old_name;
-    if (asprintf(&backup_old_name, "%s", credentialsFilePath) < 0) {
-        LOGLF(ERROR, "Failed to format the old file name: %s", credentialsFilePath);
-        printf("Error while renaming files");
-        exit(EXIT_FAILURE);
-    }
-    LOGLF(DEBUG, "backup_old_name got %s", backup_old_name);
-
-    char* backup_new_name;
-    if (asprintf(&backup_new_name, "%s%s", credentialsFilePath, ".bkp") < 0) {
+    char* backupFileName;
+    if (asprintf(&backupFileName, "%s%s", credentialsFilePath, ".bkp") < 0) {
         LOGLF(ERROR, "Failed to format the backup file name: %s%s", credentialsFilePath, ".bkp");
         printf("Error while renaming files");
         exit(EXIT_FAILURE);
     }
-    LOGLF(DEBUG, "backup_new_name got %s", backup_new_name);
+    LOGLF(DEBUG, "backupFileName got %s", backupFileName);
 
 
-    char* file_old_name;
-    if (asprintf(&file_old_name, "%s%s", credentialsFilePath, ".new") < 0) {
-        LOGLF(ERROR, "Failed to format the old file name: %s%s", credentialsFilePath, ".new");
+    char* newFileName;
+    if (asprintf(&newFileName, "%s%s", credentialsFilePath, ".new") < 0) {
+        LOGLF(ERROR, "Failed to format the new file name: %s%s", credentialsFilePath, ".new");
         printf("Error while renaming files");
         exit(EXIT_FAILURE);
     }
-    LOGLF(DEBUG, "file_old_name got %s", file_old_name);
+    LOGLF(DEBUG, "newFileName got %s", newFileName);
 
-    char* file_new_name;
-    if (asprintf(&file_new_name, "%s", credentialsFilePath) < 0) {
-        LOGLF(ERROR, "Failed to format the new file name: %s", credentialsFilePath);
-        printf("Error while renaming files");
-        exit(EXIT_FAILURE);
-    }
-    LOGLF(DEBUG, "file_new_name got %s", file_new_name);
-
-    LOGLF(DEBUG, "Renaming %s to %s", backup_old_name, backup_new_name);
-    ret = rename(backup_old_name, backup_new_name);
+    LOGLF(DEBUG, "Renaming %s to %s", credentialsFilePath, backupFileName);
+    ret = rename(credentialsFilePath, backupFileName);
         
     if(ret == 0) {
-        LOGLF(DEBUG, "Renamed %s to %s", backup_old_name, backup_new_name);
+        LOGLF(DEBUG, "Renamed %s to %s", credentialsFilePath, backupFileName);
     } else {
-        LOGLF(ERROR, "Error renaming %s to %s. Error: %s", backup_old_name, backup_new_name, strerror(errno));
+        LOGLF(ERROR, "Error renaming %s to %s. Error: %s", credentialsFilePath, backupFileName, strerror(errno));
         printf("Error while renaming files");
         exit(EXIT_FAILURE);
     }
     /* new file */
-    LOGLF(DEBUG, "Renaming %s to %s", file_old_name, file_new_name);
-    ret = rename(file_old_name, file_new_name);
+    LOGLF(DEBUG, "Renaming %s to %s", newFileName, credentialsFilePath);
+    ret = rename(newFileName, credentialsFilePath);
         
     if(ret == 0) {
-        LOGLF(DEBUG, "Renamed %s to %s", file_old_name, file_new_name);
+        LOGLF(DEBUG, "Renamed %s to %s", newFileName, credentialsFilePath);
     } else {
-        LOGLF(ERROR, "Error renaming %s to %s. Error: %s", backup_old_name, backup_new_name, strerror(errno));
+        LOGLF(ERROR, "Error renaming %s to %s. Error: %s", newFileName, credentialsFilePath, strerror(errno));
         printf("Error while renaming files");
         exit(EXIT_FAILURE);
     }
