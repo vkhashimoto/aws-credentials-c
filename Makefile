@@ -1,7 +1,9 @@
 # INC_DIR=src/logging
 CFLAGS=-c -W -ansi -pedantic -Wall -Isrc -std=gnu99
 
-all: cred
+.PHONY: clean directories
+
+all: clean directories cred
 
 cred: main.o flags.o logging.o config.o
 	gcc -o bin/cred obj/main.o obj/flags.o obj/logging.o obj/config.o
@@ -20,3 +22,6 @@ config.o: src/config/config.h src/config/config.c
 
 clean:
 	rm -rf bin/* obj/*
+
+directories:
+	mkdir -p bin/ obj/
