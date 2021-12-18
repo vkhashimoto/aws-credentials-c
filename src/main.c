@@ -123,8 +123,8 @@ int readCredentialsFromFile(char *flags[], char* credentialsFilePath) {
     return 1;
 }
 
-void rename_files(char *credentialsFilePath) {
-    LOGL(TRACE, "Executing rename_files");
+void renameFiles(char *credentialsFilePath) {
+    LOGL(TRACE, "Executing renameFiles");
     /* rename return value */
     int ret;
 
@@ -186,10 +186,10 @@ void rename_files(char *credentialsFilePath) {
 }
 
 int main(int argc, char *argv[]) {
-    handle_debug_flag(argc, argv);
+    handleLogFlags(argc, argv);
     char *flags[FLAGS_SIZE];
-    LOGLF(TRACE, "Calling handle_falgs");
-    handle_flags(argc, argv, flags);
+    LOGLF(TRACE, "Calling handleFlags");
+    handleFlags(argc, argv, flags);
 
     if (checkIfConfigFileExists() == CONFIG_FILE_NOT_FOUND) {
         LOGL(WARN, "Config file not found");
@@ -199,7 +199,7 @@ int main(int argc, char *argv[]) {
     char* credentialsFilePath = getCredentialsFilePath();
     LOGF("Credentials file path: %s", credentialsFilePath);
     if (readCredentialsFromFile(flags, credentialsFilePath) == 1) {
-        rename_files(credentialsFilePath);
+        renameFiles(credentialsFilePath);
     }
     LOG("Credentials changed successfully");
     return 0;

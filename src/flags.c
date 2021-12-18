@@ -5,7 +5,7 @@
 #include "logging/logging.h"
 
 
-void handle_debug_flag(int argc, char *argv[]) {
+void handleLogFlags(int argc, char *argv[]) {
     int index;
     for (index = 1; index < argc; index++) {
         if (strcmp(argv[index], "--log") == 0 || strcmp(argv[index], "-l") == 0) {
@@ -20,7 +20,7 @@ void handle_debug_flag(int argc, char *argv[]) {
     }
 }
 
-void handle_flags(int argc, char *argv[], char *flags[]) {
+void handleFlags(int argc, char *argv[], char *flags[]) {
     LOGLF(TRACE, "Executing handle_flags");
     int index;
     int has_profile = 0;
