@@ -9,7 +9,7 @@ typedef enum {
     COUNT
 } e_flags;
 
-void handle_flags(int argc, char *argv[], char *flags[]);
-void handle_debug_flag(int argc, char *argv[]);
+void handleLogFlags(int argc, char *argv[]);
+void handleFlags(int argc, char *argv[], char *flags[]);
 
 #endif
