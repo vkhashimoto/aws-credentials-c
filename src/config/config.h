@@ -5,6 +5,8 @@
 
 static const char CREDENTIALS_FILE_PATH_PREFIX[] = "path=";
 
+char* _getPathWithHome(char* path);
+
 char* getCredentialsFilePath();
 
 int checkIfConfigFileExists();

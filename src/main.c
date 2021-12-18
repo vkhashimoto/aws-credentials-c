@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,9 +9,9 @@
 #include "config/config.h"
 
 void writeToNewFile(char *text, char* credentialsFilePath) {
-    LOGL(TRACE, "Executing writeToNewFile");
     FILE *file;
     char* path;
+    LOGL(TRACE, "Executing writeToNewFile");
     if (asprintf(&path, "%s%s", credentialsFilePath, ".new") < 0) {
         LOGLF(ERROR, "Failed to get path for the new file: %s%s. Error: %s", credentialsFilePath, ".new", strerror(errno));
         printf("Error writing credentials to the file: %s%s.", credentialsFilePath, ".new");
@@ -72,7 +74,7 @@ int readCredentialsFromFile(char *flags[], char* credentialsFilePath) {
     int found_profile_already_written = 0;
 
     content = readExistingCredentialsFile(content, credentialsFilePath);
-    char *to_tokenize[strlen(content)];
+    char to_tokenize[strlen(content)];
     memcpy(to_tokenize, content, strlen(content) + 1);
     char* profileTag;
     if(0 > asprintf(&profileTag, "[%s]", flags[profile])) {
@@ -80,7 +82,6 @@ int readCredentialsFromFile(char *flags[], char* credentialsFilePath) {
         exit(EXIT_FAILURE);
     }
     /* must check with brackets */
-    /* if (strstr(content, flags[profile]) != NULL) { */
     char *token = strtok(to_tokenize, delimiter);
     while (token != NULL) {
         /* Change credentials */

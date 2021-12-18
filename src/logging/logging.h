@@ -10,6 +10,8 @@ typedef enum {
     TRACE
 } e_levels;
 
+void _setLogLevel(int level);
+int isLogLevelSet();
 void LOG(char *msg);
 void LOGL(int level, char *msg);
 void LOGF(char *fmt, ...);
