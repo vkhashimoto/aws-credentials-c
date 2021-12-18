@@ -100,6 +100,7 @@ int read_credentials(char *flags[], char* credentialsFilePath) {
             if(0 > asprintf(&profiletag, "[%s]", flags[profile])) {
                 printf("ERROR FORMATING PROFILE TAG");
             }
+            DEBUGF("Changing credentials for profile %s",  profiletag);
             write_to_file(profiletag, credentialsFilePath);
             free(profiletag);
             write_to_file(flags[credential], credentialsFilePath);
@@ -112,7 +113,7 @@ int read_credentials(char *flags[], char* credentialsFilePath) {
             continue;
         }
         if (found_profile == 0) {
-            if (strcmp(token, "[profile234]") == 0 && found_profile_already_written == 0) {
+            if (strcmp(token, flags[profile]) == 0 && found_profile_already_written == 0) {
                 found_profile = 1;
             } else {
                 DEBUGF("WRITING %s TO FILE\n", token);
