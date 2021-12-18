@@ -1,7 +1,10 @@
+#define _GNU_SOURCE
+
 #include <errno.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "config.h"
 #include "logging/logging.h"
 
@@ -60,7 +63,6 @@ char* getCredentialsFilePath() {
         exit(EXIT_FAILURE);
     }
     char* content = NULL;
-    char* path = NULL;
     if (fseek(configFile, 0L, SEEK_END) == 0) {
         LOGL(DEBUG, "Getting content size from config file");
         long bufsize = ftell(configFile);
